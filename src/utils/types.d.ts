@@ -1,8 +1,3 @@
-export interface SWContextValue {
-    page: string,
-    changePage: (page: string) => void,
-}
-
 export interface HeroInfo {
     name: string,
     gender: string,
