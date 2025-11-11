@@ -8,3 +8,11 @@ export interface HeroInfo {
     skin_color: string,
     eye_color: string
 }
+
+export interface Hero {
+    name: string,
+    img: string,
+    url: string
+}
+
+export type Characters = Record<string, Hero>;
