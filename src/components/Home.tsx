@@ -1,24 +1,13 @@
 import Hero from "./Hero.tsx";
 import DreamTeam from "./DreamTeam.tsx";
 import OpeningCrawl from "./OpeningCrawl.tsx";
-import {SWContext} from "../utils/context.ts";
-import {useContext, useEffect} from "react";
-import {characters, defaultHero} from "../utils/constants.ts";
-import {useParams} from "react-router";
 import ErrorPage from "./ErrorPage.tsx";
+import {useValidHero} from "../hooks/customHooks.ts";
 
 const Home = () => {
-    const {heroId = defaultHero} = useParams();
-    const {changeHero} = useContext(SWContext);
+    const {isValid} =useValidHero();
 
-    useEffect(() => {
-        if (!(heroId in characters)) {
-            return;
-        }
-        changeHero(heroId);
-    }, [heroId])
-
-    return (heroId in characters) ? (
+    return isValid ? (
         <main>
             <Hero/>
             <DreamTeam/>

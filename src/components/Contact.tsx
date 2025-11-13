@@ -1,20 +1,11 @@
-import {useContext, useEffect, useState} from "react";
-import {base_url, characters, defaultHero, period_month} from "../utils/constants.ts";
-import {useParams} from "react-router";
-import {SWContext} from "../utils/context.ts";
+import {useEffect, useState} from "react";
+import {base_url, period_month} from "../utils/constants.ts";
 import ErrorPage from "./ErrorPage.tsx";
+import {useValidHero} from "../hooks/customHooks.ts";
 
 const Contact = () => {
     const [planets, setPlanets] = useState(['wait...']);
-    const {heroId = defaultHero} = useParams();
-    const {changeHero} = useContext(SWContext);
-
-    useEffect(() => {
-        if (!(heroId in characters)) {
-            return;
-        }
-        changeHero(heroId);
-    }, [heroId])
+    const {isValid} = useValidHero()
 
     async function getPlanets() {
         const res = await fetch(`${base_url}/v1/planets`);
@@ -36,7 +27,7 @@ const Contact = () => {
         }
     }, [])
 
-    return (heroId in characters) ? (
+    return isValid ? (
         <form className={`w-4/5 my-0 mx-auto rounded-[5px] bg-[#f2f2f2] p-5`} onSubmit={(e) => {
             e.preventDefault();
         }}>
